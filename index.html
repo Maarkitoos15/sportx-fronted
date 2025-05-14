@@ -4,13 +4,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Inicio | Mi Tienda</title>
-  <link rel="stylesheet" href="/sportx-fronted/css/index.css">
-  <link rel="icon" type="image/png" href="/sportx-fronted/img/logo.png">
+  <link rel="stylesheet" href="css/index.css">
+  <link rel="icon" type="image/png" href="img/logo.png">
 </head>
 <body>
   <header class="navbar">
     <div class="logo">
-      <img src="/sportx-fronted/img/logo.png" class="logo" alt="Logo de la tienda">
+      <img src="img/logo.png" class="logo" alt="Logo de la tienda">
     </div>
     <nav class="nav-links">
       <a href="productos.html">Productos</a>
@@ -32,7 +32,7 @@
 
   <script>
     // Llamada al backend para obtener productos
-    fetch('http://localhost:5432/api/productos/index')
+    fetch('https://sportx-backend-production.up.railway.app/api/productos/index')
       .then(res => res.json())
       .then(data => {
         const container = document.getElementById('productos-container');
