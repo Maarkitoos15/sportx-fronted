@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Inicio | Mi Tienda</title>
+  <link rel="stylesheet" href="/css/index.css">
+  <link rel="icon" type="image/png" href="/img/logo.png">
+</head>
+<body>
+  <header class="navbar">
+    <div class="logo">
+      <img src="/img/logo.png" class="logo" alt="Logo de la tienda">
+    </div>
+    <nav class="nav-links">
+      <a href="productos.html">Productos</a>
+      <a href="contacto.html">Contacto</a>
+    </nav>
+    <div class="cart-button">
+      <button>🛒 Carrito</button>
+    </div>
+  </header>
+
+  <main class="main-content">
+    <h1>Bienvenido a Mi Tienda</h1>
+    <p>Explora nuestros productos y descubre lo mejor.</p>
+
+    <section id="productos-container" class="productos-container">
+      <!-- Aquí se insertarán los productos desde JS -->
+    </section>
+  </main>
+
+  <script>
+    // Llamada al backend para obtener productos
+    fetch('http://localhost:5432/api/productos/index')
+      .then(res => res.json())
+      .then(data => {
+        const container = document.getElementById('productos-container');
+
+        data.forEach(producto => {
+          const card = document.createElement('div');
+          card.className = 'producto-card';
+          card.innerHTML = `
+            <img src="${producto.imagen}" alt="${producto.nombre}">
+            <h3>${producto.nombre}</h3>
+            <p>Marca: ${producto.marca}</p>
+            <p>Sexo: ${producto.sexo}</p>
+            <p class="precio">Precio: $${producto.precio}</p>
+          `;
+          container.appendChild(card);
+        });
+      })
+      .catch(err => {
+        console.error('Error al cargar productos:', err);
+      });
+  </script>
+</body>
+</html>
