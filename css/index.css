@@ -69,11 +69,11 @@ body {
 /* Estilos de productos (si aplica) */
 .productos-container {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); /* ← antes era 220px */
-  gap: 1.5rem;
-  padding: 2rem 4rem;
-  max-width: 1600px; /* más ancho */
-  margin: 0 auto;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 2rem;
+  padding: 2rem;
+  max-width: 1400px; /* Aumenta este valor según lo ancho que lo quieras */
+  margin: 0 auto;     /* Centra el contenedor */
 }
 
 
@@ -115,7 +115,7 @@ body {
 /* Estilos de la página de contacto */
 main {
   padding: 20px;
-  max-width: 900px;
+  max-width: 100%;
   margin: auto;
   background: #fff;
   box-shadow: 0 0 10px rgba(0,0,0,0.1);
