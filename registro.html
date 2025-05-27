@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Registro | Mi Tienda</title>
+  <link rel="stylesheet" href="./css/index.css">
+  <link rel="icon" type="image/png" href="./img/logo.png">
+</head>
+<body>
+  <header class="navbar">
+    <div class="logo">
+      <img src="./img/logo.png" class="logo" alt="Logo de la tienda">
+    </div>
+    <nav class="nav-links">
+      <a href="./index.html">Inicio</a>
+      <a href="./login.html">Iniciar Sesión</a>
+    </nav>
+  </header>
+
+  <main class="main-content">
+    <h1>Registro de Usuario</h1>
+
+    <form id="registro-form" class="form-login">
+      <input type="text" id="nombre" placeholder="Nombre completo" required />
+      <input type="email" id="email" placeholder="Correo electrónico" required />
+      <input type="password" id="password" placeholder="Contraseña" required />
+      <button type="submit">Registrarse</button>
+      <p id="mensaje-error" class="mensaje-error"></p>
+    </form>
+  </main>
+
+  <script>
+    document.getElementById('registro-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const nombre = document.getElementById('nombre').value;
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+
+      try {
+        const res = await fetch('https://sportx-backend-production.up.railway.app/api/register', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ nombre, email, password })
+        });
+
+        const data = await res.json();
+
+        if (res.ok) {
+          alert('Usuario registrado. Ahora puedes iniciar sesión.');
+          window.location.href = './login.html';
+        } else {
+          document.getElementById('mensaje-error').textContent = data.message || 'Error al registrar';
+        }
+      } catch (error) {
+        document.getElementById('mensaje-error').textContent = 'Error de conexión con el servidor';
+        console.error(error);
+      }
+    });
+  </script>
+</body>
+</html>

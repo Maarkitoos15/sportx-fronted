@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Login | Mi Tienda</title>
+  <link rel="stylesheet" href="./css/index.css">
+  <link rel="icon" type="image/png" href="./img/logo.png">
+</head>
+<body>
+  <header class="navbar">
+    <div class="logo">
+      <img src="./img/logo.png" class="logo" alt="Logo de la tienda">
+    </div>
+    <nav class="nav-links">
+      <a href="./index.html">Inicio</a>
+      <a href="./contacto.html">Contacto</a>
+    </nav>
+  </header>
+  <form id="login-form" class="form-login">
+  <input type="email" id="email" placeholder="Correo electrónico" required />
+  <input type="password" id="password" placeholder="Contraseña" required />
+  <button type="submit">Iniciar Sesión</button>
+  <p id="mensaje-error" class="mensaje-error"></p>
+</form>
+
+<script>
+  document.getElementById('login-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+
+    try {
+      const res = await fetch('https://sportx-backend-production.up.railway.app/api/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password })
+      });
+
+      const data = await res.json();
+
+      if (res.ok) {
+        alert('Sesión iniciada correctamente');
+        // Guardar el token si lo usas
+        localStorage.setItem('token', data.token);
+        window.location.href = './index.html';
+      } else {
+        document.getElementById('mensaje-error').textContent = data.message || 'Error al iniciar sesión';
+      }
+    } catch (error) {
+      document.getElementById('mensaje-error').textContent = 'Error de conexión con el servidor';
+      console.error(error);
+    }
+  });
+</script>
+</body>
+</html>
