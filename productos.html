@@ -1,10 +1,9 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Contacto | SportX</title>
+  <title>Inicio | Mi Tienda</title>
   <link rel="stylesheet" href="./css/index.css">
   <link rel="icon" type="image/png" href="./img/logo.png">
 </head>
@@ -14,41 +13,46 @@
       <img src="./img/logo.png" class="logo" alt="Logo de la tienda">
     </div>
     <nav class="nav-links">
-      <a href="./productos.html">Productos</a>
-      <a href="./index.html">Contacto</a>
+      <a href="./index.html">Inicio</a>
+      <a href="./contacto.html">Contacto</a>
     </nav>
+    <div class="cart-button">
+      <button>🛒 Carrito</button>
+    </div>
   </header>
 
-  <main>
-    <section class="info-section">
-      <h2>Información de la tienda</h2>
-      <p><strong>Dirección:</strong> Av. Principal 123, Ciudad Deportiva</p>
-      <p><strong>Teléfono:</strong> +34 123 456 789</p>
-      <p><strong>Email:</strong> contacto@sportx.com</p>
-      <p><strong>Horario:</strong> Lunes a Sábado de 9:00 a 20:00</p>
-    </section>
+  <main class="main-content">
+    <h1>Bienvenido a Mi Tienda</h1>
+    <p>Explora nuestros productos y descubre lo mejor.</p>
 
-    <section class="map-section">
-      <h2>Ubicación</h2>
-      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3153.0194267733164!2d-122.42067948468107!3d37.77492977975969!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8085808a063f69fd%3A0x3d8efc07f21bc05e!2sSportX!5e0!3m2!1ses!2sus!4v1625074567196" allowfullscreen="" loading="lazy"></iframe>
-    </section>
-
-    <section class="contact-form">
-      <h2>Envíanos un mensaje</h2>
-      <form action="#" method="post">
-        <label for="name">Nombre:</label>
-        <input type="text" id="name" name="name" required>
-
-        <label for="email">Correo electrónico:</label>
-        <input type="email" id="email" name="email" required>
-
-        <label for="message">Mensaje:</label>
-        <textarea id="message" name="message" rows="5" required></textarea>
-
-        <button type="submit">Enviar</button>
-      </form>
+    <section id="productos-container" class="productos-container">
+      <!-- Aquí se insertarán los productos desde JS -->
     </section>
   </main>
+
+  <script>
+    // Llamada al backend para obtener productos
+    fetch('https://sportx-backend-production.up.railway.app/api/p/productos')
+      .then(res => res.json())
+      .then(data => {
+        const container = document.getElementById('productos-container');
+
+        data.forEach(producto => {
+          const card = document.createElement('div');
+          card.className = 'producto-card';
+          card.innerHTML = `
+            <img src="${producto.imagen}" alt="${producto.nombre}">
+            <h3>${producto.nombre}</h3>
+            <p>Marca: ${producto.marca}</p>
+            <p>Sexo: ${producto.sexo}</p>
+            <p class="precio">Precio: $${producto.precio}</p>
+          `;
+          container.appendChild(card);
+        });
+      })
+      .catch(err => {
+        console.error('Error al cargar productos:', err);
+      });
+  </script>
 </body>
 </html>
-
