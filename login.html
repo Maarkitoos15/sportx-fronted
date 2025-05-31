@@ -13,8 +13,8 @@
       <img src="./img/logo.png" class="logo" alt="Logo de la tienda">
     </div>
     <nav class="nav-links">
-        <button onclick="cerrarSesion()">Cerrar Sesión</button>
-        <a href="./registro.html">Registrarse</a>
+      
+       <p>¿No tienes una cuenta? <a href="./registro.html">Registrate</a></p>
     </nav>
   </header>
   <form id="login-form" class="form-login">
@@ -24,12 +24,15 @@
   <p id="mensaje-error" class="mensaje-error"></p>
 </form>
 
-<script>
+<div class="imagenes-login">
+  <img src="./img/multimarcas.jpg" alt="Imagen 1">
+  <img src="./img/imagen2.jpg" alt="Imagen 2">
+</div>
 
- function cerrarSesion() {
-      localStorage.removeItem('email');
-      window.location.href = './login.html';
-    }
+<p class="descripcion">SPORTX es tu tienda de ropa urbana y casual, con las marcas más top como Nike, Adidas, Puma, Reebok, Kappa y Ellesse. Estilo callejero, comodidad y actitud en cada prenda.</p>
+<p class="eslogan">SPORTX: Estilo que se mueve contigo.</p>
+
+<script>
 
   document.getElementById('login-form').addEventListener('submit', async (e) => {
     e.preventDefault();

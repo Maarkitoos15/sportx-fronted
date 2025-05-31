@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Carrito</title>
+  <link rel="stylesheet" href="index.html"> <!-- si tienes estilos -->
+</head>
+<body>
+  <h1>Carrito de Compras</h1>
+  <div id="carrito-container"></div>
+
+  <script >
+    document.addEventListener('DOMContentLoaded', () => {
+  const contenedor = document.getElementById('carrito-container');
+
+  // Obtener el carrito del localStorage
+  const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+
+  if (carrito.length === 0) {
+    contenedor.innerHTML = '<p>Tu carrito está vacío.</p>';
+    return;
+  }
+
+  carrito.forEach(producto => {
+    const item = document.createElement('div');
+    item.className = 'producto-carrito';
+    item.innerHTML = `
+      <img src="${producto.imagen}" alt="${producto.nombre}" width="100">
+      <h3>${producto.nombre}</h3>
+      <p>Marca: ${producto.marca}</p>
+      <p>Sexo: ${producto.sexo}</p>
+      <p class="precio">Precio: ${producto.precio}€</p>
+      <hr>
+    `;
+    contenedor.appendChild(item);
+  });
+});
+
+  </script>
+</body>
+</html>
