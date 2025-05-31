@@ -13,7 +13,7 @@
       <img src="./img/logo.png" class="logo" alt="Logo de la tienda">
     </div>
     <nav class="nav-links">
-
+      <button onclick="cerrarSesion()">Cerrar Sesión</button>
       <a href="./index.html">Inicio</a>
       <a href="./contacto.html">Contacto</a>
     </nav>
@@ -37,6 +37,11 @@
     window.location.href = './login.html';
    }
 
+    function cerrarSesion() {
+      localStorage.removeItem('email');
+      window.location.href = './login.html';
+    }
+
     // Llamada al backend para obtener productos
     fetch('https://sportx-backend-production.up.railway.app/api/p/productos')
       .then(res => res.json())
@@ -52,6 +57,7 @@
             <p>Marca: ${producto.marca}</p>
             <p>Sexo: ${producto.sexo}</p>
             <p class="precio">Precio: ${producto.precio}€</p>
+            <button>Comprar</button>
           `;
           container.appendChild(card);
         });
