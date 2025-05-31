@@ -17,6 +17,9 @@
       <a href="./productos.html">Productos</a>
       <a href="./contacto.html">Contacto</a>
     </nav>
+    <div class="cart-button">
+      <button>🛒 Carrito</button>
+    </div>
    
   </header>
 
@@ -52,6 +55,7 @@
             <p>Marca: ${producto.marca}</p>
             <p>Sexo: ${producto.sexo}</p>
             <p class="precio"> Precio: ${producto.precio}€</p>
+            <button>Comprar</button>
           `;
           container.appendChild(card);
         });
