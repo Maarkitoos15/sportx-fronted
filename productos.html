@@ -32,6 +32,11 @@
   </main>
 
   <script>
+
+ if (!localStorage.getItem('email')) {
+    window.location.href = './login.html';
+   }
+
     // Llamada al backend para obtener productos
     fetch('https://sportx-backend-production.up.railway.app/api/p/productos')
       .then(res => res.json())

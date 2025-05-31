@@ -13,8 +13,8 @@
       <img src="./img/logo.png" class="logo" alt="Logo de la tienda">
     </div>
     <nav class="nav-links">
-      <a href="./login.html">Iniciar Sesion</a>
-      <a href="./index.html">Contacto</a>
+      <a href="./index.html">Inicio</a>
+      <a href="./productos.html">Productos</a>
     </nav>
   </header>
 
@@ -47,6 +47,12 @@
         <button type="submit">Enviar</button>
       </form>
     </section>
+
   </main>
+  <script>
+     if (!localStorage.getItem('email')) {
+    window.location.href = './login.html';
+   }
+  </script>
 </body>
 </html>
