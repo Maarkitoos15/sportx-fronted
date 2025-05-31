@@ -12,10 +12,12 @@
     <div class="logo">
       <img src="./img/logo.png" class="logo" alt="Logo de la tienda">
     </div>
+    <p id="bienvenido"></p>
     <nav class="nav-links">
       <a href ="login.html">Iniciar Sesión</a>
       <a href="./registro.html">Registrarse</a>
       <a href="./contacto.html">Contacto</a>
+      <a href="./productos.html">Productos</a>
     </nav>
    
   </header>
@@ -30,6 +32,10 @@
   </main>
 
   <script>
+   if (localStorage.getItem('email') !== null) {
+    document.getElementById('bienvenido').innerHTML = `Bienvenido ${localStorage.getItem('email')}`
+   }
+   
     // Llamada al backend para obtener productos
     fetch('https://sportx-backend-production.up.railway.app/api/productos/index')
       .then(res => res.json())

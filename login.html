@@ -16,6 +16,9 @@
       <a href="./index.html">Inicio</a>
       <a href="./contacto.html">Contacto</a>
     </nav>
+     <div class="cart-button">
+      <button>🛒 Carrito</button>
+    </div>
   </header>
   <form id="login-form" class="form-login">
   <input type="email" id="email" placeholder="Correo electrónico" required />
@@ -44,6 +47,7 @@
         alert('Sesión iniciada correctamente');
         // Guardar el token si lo usas
         localStorage.setItem('token', data.token);
+        localStorage.setItem('email', email);
         window.location.href = './index.html';
       } else {
         document.getElementById('mensaje-error').textContent = data.message || 'Error al iniciar sesión';
