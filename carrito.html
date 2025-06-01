@@ -3,14 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <title>Carrito</title>
-  <link rel="stylesheet" href="index.html"> <!-- si tienes estilos -->
+  <link rel="stylesheet" href="./css/index.css"> 
 </head>
 <body>
   <h1>Carrito de Compras</h1> 
-  <button onclick="window.location.href='./index.html'">Volver a la tienda</button>
+  <button class="btn-volver" onclick="window.location.href='./index.html'">Volver a la tienda</button>
   <div id="carrito-container"></div>
  
-  
+  <div class="resumen-carrito">
+  <p>Total productos: <span id="total-productos">0</span></p>
+  <p>Total a pagar: <span id="total-precio">0.00</span> €</p>
+</div>
+
   <script >
     
    document.addEventListener('DOMContentLoaded', () => {
@@ -28,18 +32,29 @@
 
     carrito.forEach((producto, index) => {
       const item = document.createElement('div');
-      item.className = 'producto-carrito';
-      item.innerHTML = `
-        <img src="${producto.imagen}" alt="${producto.nombre}" width="100">
-        <h3>${producto.nombre}</h3>
-        <p>Marca: ${producto.marca}</p>
-        <p>Sexo: ${producto.sexo}</p>
-        <p class="precio">Precio: ${producto.precio}€</p>
-        <button class="eliminar-btn" data-index="${index}">Eliminar</button>
+    item.className = 'producto-carrito';
+    item.innerHTML = `
+    <img src="${producto.imagen}" alt="${producto.nombre}" class="producto-imagen">
+    <h3 class="producto-nombre">${producto.nombre}</h3>
+    <p class="producto-detalle">Marca: ${producto.marca}</p>
+    <p class="producto-detalle">Sexo: ${producto.sexo}</p>
+    <p class="producto-precio">Precio: ${producto.precio}€</p>
+    <button class="eliminar-btn" data-index="${index}">Eliminar</button>
+
+
         <hr>
       `;
       contenedor.appendChild(item);
     });
+
+    // Calcular totales
+    let totalProductos = carrito.length;
+    let totalPrecio = carrito.reduce((sum, producto) => sum + parseFloat(producto.precio), 0);
+
+    // Mostrar totales en el HTML
+    document.getElementById('total-productos').textContent = totalProductos;
+    document.getElementById('total-precio').textContent = totalPrecio.toFixed(2);
+
 
     // Agregar listeners a los botones de eliminar
     document.querySelectorAll('.eliminar-btn').forEach(btn => {
