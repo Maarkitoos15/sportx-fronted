@@ -129,45 +129,122 @@ h2 {
   color: #222;
 }
 
+
+/*PAGINA DE CONTACTO*/
+
+/* Contenedor principal de contacto */
+.main-contacto {
+  max-width: 1000px;
+  margin: 3rem auto;
+  padding: 2rem;
+  background-color: #ffffff;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+}
+
 /* Texto informativo */
+.info-section {
+  max-width: 600px;
+  margin: 3rem auto;
+  padding: 2rem;
+  background-color: #ffffff;
+  border-radius: 1rem;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  font-family: 'Segoe UI', sans-serif;
+  color: #1e293b;
+}
+
+.info-section h2 {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+  color: #0f172a;
+  border-bottom: 2px solid #3b82f6;
+  padding-bottom: 0.5rem;
+}
+
 .info-section p {
-  margin-bottom: 0.5rem;
   font-size: 1rem;
+  margin: 0.75rem 0;
+  line-height: 1.6;
+}
+
+.info-section p strong {
+  color: #3b82f6;
 }
 
 /* Mapa responsivo */
+.map-section {
+  max-width: 800px;
+  margin: 3rem auto;
+  padding: 2rem;
+  background-color: #ffffff;
+  border-radius: 1rem;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  font-family: 'Segoe UI', sans-serif;
+  color: #1e293b;
+}
+
+.map-section h2 {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+  color: #0f172a;
+  border-bottom: 2px solid #3b82f6;
+  padding-bottom: 0.5rem;
+}
+
+/* Estilo del iframe del mapa */
 .map-section iframe {
   width: 100%;
-  height: 300px;
+  height: 400px;
   border: none;
-  border-radius: 8px;
-  margin-top: 1rem;
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
 }
+
 
 /* Formulario */
 /* Contenedor del formulario */
+.contact-form {
+  max-width: 600px;
+  margin: 4rem auto;
+  padding: 2.5rem;
+  background-color: #ffffff;
+  border-radius: 1rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  font-family: 'Segoe UI', sans-serif;
+  color: #1e293b;
+}
+
+.contact-form h2 {
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  color: #0f172a;
+  border-bottom: 2px solid #3b82f6;
+  padding-bottom: 0.5rem;
+  text-align: center;
+}
+
 .contact-form form {
   display: flex;
   flex-direction: column;
   gap: 1.2rem;
-  padding-top: 1rem;
 }
 
 /* Etiquetas */
 .contact-form label {
   font-weight: 600;
   font-size: 1rem;
-  color: #333;
+  color: #334155;
 }
 
-/* Campos de entrada y textarea */
+/* Inputs y textarea */
 .contact-form input,
 .contact-form textarea {
   padding: 0.9rem 1rem;
   font-size: 1rem;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  background-color: #f9f9f9;
+  border: 1px solid #d1d5db;
+  border-radius: 0.75rem;
+  background-color: #f9fafb;
   transition: all 0.3s ease;
   box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
 }
@@ -175,30 +252,32 @@ h2 {
 .contact-form input:focus,
 .contact-form textarea:focus {
   background-color: #fff;
-  border-color: #007bff;
-  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.2);
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
   outline: none;
 }
 
 /* Botón de envío */
 .contact-form button {
-  align-self: flex-start;
-  background: linear-gradient(135deg, #007bff, #0056b3);
+  align-self: center;
+  background: linear-gradient(135deg, #3b82f6, #1d4ed8);
   color: #fff;
   font-size: 1rem;
-  padding: 0.75rem 1.75rem;
+  padding: 0.75rem 2rem;
   border: none;
-  border-radius: 8px;
+  border-radius: 0.75rem;
   cursor: pointer;
-  font-weight: 600; 
+  font-weight: 600;
   letter-spacing: 0.5px;
   transition: background 0.3s ease, transform 0.2s ease;
 }
 
 .contact-form button:hover {
-  background: linear-gradient(135deg, #0056b3, #003e80);
+  background: linear-gradient(135deg, #1d4ed8, #1e40af);
   transform: translateY(-2px);
 }
+
+
 
 
 /* Responsive */
@@ -215,14 +294,19 @@ h2 {
 
 /* Estilos login */
 .descripcion {
-  font-size: 1.1rem;
-  line-height: 1.6;
-  color: #333;
-  max-width: 600px;
-  margin: 20px auto;
+  font-size: 1.2rem;
+  line-height: 1.8;
+  color: #222;
+  max-width: 700px;
+  margin: 40px auto;
+  padding: 0 20px;
   text-align: center;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f9f9f9;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
+
 
 .eslogan {
   font-size: 1.5rem;
@@ -234,3 +318,154 @@ h2 {
   letter-spacing: 1px;
   text-transform: uppercase;
 }
+.form-login {
+  max-width: 400px;
+  margin: 100px auto;
+  padding: 2rem;
+  background-color: #ffffff;
+  border-radius: 1rem;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.form-login input {
+  padding: 0.9rem;
+  border: 1px solid #ccc;
+  border-radius: 0.6rem;
+  font-size: 1rem;
+  transition: border-color 0.3s;
+}
+
+.form-login input:focus {
+  border-color: #3b82f6;
+  outline: none;
+}
+
+.form-login button {
+  padding: 0.9rem;
+  background-color: #3b82f6;
+  color: white;
+  border: none;
+  border-radius: 0.6rem;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.form-login button:hover {
+  background-color: #2563eb;
+}
+
+.mensaje-error {
+  color: #dc2626;
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+.contenedor-login {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  margin-top: 5rem;
+  flex-wrap: wrap;
+}
+
+.imagen-lateral {
+  max-width: 200px;
+  height: auto;
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.imagen-lateral:hover {
+  transform: scale(1.05);
+}
+
+.form-login {
+  max-width: 400px;
+  width: 100%;
+  padding: 2rem;
+  background-color: #ffffff;
+  border-radius: 1rem;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/*Boton cerrar sesion*/
+.btn-cerrar-sesion {
+  background: linear-gradient(135deg, #ef4444, #b91c1c);
+  color: white;
+  padding: 0.7rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 0.6rem;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.btn-cerrar-sesion:hover {
+  background: linear-gradient(135deg, #dc2626, #991b1b);
+  transform: translateY(-2px);
+}
+
+/*Botones Inicio,Producto,Contacto*/
+.nav-link {
+  text-decoration: none;
+  color: #1e293b; /* gris oscuro */
+  font-weight: 600;
+  font-size: 1rem;
+  padding: 0.6rem 1rem;
+  border-radius: 0.5rem;
+  transition: background 0.3s ease, color 0.3s ease;
+  margin-right: 0.5rem;
+  display: inline-block;
+}
+
+/*Mensaje  Bienveindo*/
+.mensaje-bienvenida {
+  font-size: 1.25rem;
+  color: #1e40af; /* Azul fuerte */
+  font-weight: 600;
+  text-align: center;
+  margin: 2rem 0;
+  background-color: #e0f2fe; /* Azul claro */
+  padding: 1rem 1.5rem;
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease;
+}
+
+.mensaje-bienvenida:hover {
+  transform: scale(1.02);
+}
+
+/*Boton Comprar divs*/
+.btn-comprar {
+  background: linear-gradient(135deg, #10b981, #059669); /* verde esmeralda */
+  color: white;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 0.6rem;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.btn-comprar:hover {
+  background: linear-gradient(135deg, #059669, #047857);
+  transform: scale(1.03);
+}
+
+
