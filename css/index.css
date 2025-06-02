@@ -584,3 +584,22 @@ h2 {
   color: #1f2937;
   text-align: right;
 }
+
+/*Boton al Inicio*/
+.boton-al-inicio {
+  display: inline-block;
+  background: linear-gradient(135deg, #10b981, #059669); /* verde moderno */
+  color: white;
+  padding: 0.6rem 1.2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 8px;
+  text-decoration: none;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.boton-al-inicio:hover {
+  background: linear-gradient(135deg, #059669, #047857);
+  transform: scale(1.05);
+}
