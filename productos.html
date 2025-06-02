@@ -62,6 +62,19 @@
             <button class="btn-comprar">Comprar</button>
 
           `;
+          const boton = card.querySelector('.btn-comprar');
+  boton.addEventListener('click', () => {
+    // Obtener carrito actual (si existe) o crear uno vacío
+    let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+
+    // Agregar el producto al carrito
+    carrito.push(producto);
+
+    // Guardar el carrito actualizado en localStorage
+    localStorage.setItem('carrito', JSON.stringify(carrito));
+
+    alert('Producto añadido al carrito');
+  });
           container.appendChild(card);
         });
       })
