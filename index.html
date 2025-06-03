@@ -14,14 +14,23 @@
     </div>
     <p id="bienvenido" class="mensaje-bienvenida"></p>
 
-    <nav class="nav-links">
-      <button class="btn-cerrar-sesion" onclick="cerrarSesion()">Cerrar Sesión</button>
-      <a href="./productos.html">Productos</a>
-      <a href="./contacto.html">Contacto</a>
-    </nav>
-    <div class="cart-button">
-     <button><a href="./carrito.html">🛒</a></button> 
-    </div>
+   <nav class="nav-links">
+  <a href="./productos.html" class="nav-link">Productos</a>
+  <a href="./contacto.html" class="nav-link">Contacto</a>
+</nav>
+<div class="acciones-derecha">
+  <div class="cart-button">
+    <div class="cart-button" id="cart-button">
+  <a href="./carrito.html">🛒</a>
+</div>
+</div>
+<button class="button"onclick="cerrarSesion()" aria-label="Cerrar sesión">
+  <span class="X"></span>
+  <span class="Y"></span>
+  <div class="close">Cerrar Sesión</div>
+</button>
+</div>
+
    
   </header>
 
@@ -35,19 +44,23 @@
   </main>
 
   <script>
-    if (!localStorage.getItem('email')) {
-    window.location.href = './login.html';
-   }
-   if (localStorage.getItem('email') !== null) {
-    document.getElementById('bienvenido').innerHTML = `Bienvenido ${localStorage.getItem('email')}`
-   }
+  const email = localStorage.getItem('email');
+  const esInvitado = localStorage.getItem('invitado') === 'true';
 
-    function cerrarSesion() {
-      localStorage.clear();
-      window.location.href = './login.html';
+  if (!email && !esInvitado) {
+    window.location.href = './login.html';
+  }
+
+  if (email) {
+    document.getElementById('bienvenido').innerHTML = `Bienvenido ${email}`;
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const cartBtn = document.getElementById('cart-button');
+    if (!email && cartBtn) {
+      cartBtn.style.display = 'none';
     }
 
-   
     // Llamada al backend para obtener productos
     fetch('https://sportx-backend-production.up.railway.app/api/productos/index')
       .then(res => res.json())
@@ -64,27 +77,34 @@
             <p>Sexo: ${producto.sexo}</p>
             <p class="precio"> Precio: ${producto.precio}€</p>
             <button class="btn-comprar">Comprar</button>
-  `;
+          `;
 
-  const boton = card.querySelector('.btn-comprar');
-  boton.addEventListener('click', () => {
-    // Obtener carrito actual (si existe) o crear uno vacío
-    let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+          const boton = card.querySelector('.btn-comprar');
+          boton.addEventListener('click', () => {
+            if (esInvitado) {
+              alert('Debes iniciar sesión para añadir productos al carrito.');
+              return;
+            }
 
-    // Agregar el producto al carrito
-    carrito.push(producto);
+            let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+            carrito.push(producto);
+            localStorage.setItem('carrito', JSON.stringify(carrito));
 
-    // Guardar el carrito actualizado en localStorage
-    localStorage.setItem('carrito', JSON.stringify(carrito));
+            alert('Producto añadido al carrito');
+          });
 
-    alert('Producto añadido al carrito');
-  });
           container.appendChild(card);
         });
       })
       .catch(err => {
         console.error('Error al cargar productos:', err);
       });
-  </script>
+  });
+
+  function cerrarSesion() {
+    localStorage.clear();
+    window.location.href = './login.html';
+  }
+</script>
 </body>
 </html>

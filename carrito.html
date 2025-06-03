@@ -17,77 +17,101 @@
   </div>
 
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const contenedor = document.getElementById('carrito-container');
-      let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+  document.addEventListener('DOMContentLoaded', () => {
+    const contenedor = document.getElementById('carrito-container');
+    let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
 
-      function agruparProductos(carrito) {
-        const agrupado = {};
-        carrito.forEach(producto => {
-          const clave = producto.id || producto.nombre;
-          if (agrupado[clave]) {
-            agrupado[clave].cantidad += 1;
-          } else {
-            agrupado[clave] = { ...producto, cantidad: 1 };
-          }
-        });
-        return Object.values(agrupado);
-      }
-
-      function renderCarrito() {
-        contenedor.innerHTML = '';
-
-        if (carrito.length === 0) {
-          contenedor.innerHTML = '<p>Tu carrito está vacío.</p>';
-          return;
+    function agruparProductos(carrito) {
+      const agrupado = {};
+      carrito.forEach(producto => {
+        const clave = producto.id || producto.nombre;
+        if (agrupado[clave]) {
+          agrupado[clave].cantidad += 1;
+        } else {
+          agrupado[clave] = { ...producto, cantidad: 1 };
         }
+      });
+      return Object.values(agrupado);
+    }
 
-        const productosAgrupados = agruparProductos(carrito);
+    function renderCarrito() {
+      contenedor.innerHTML = '';
 
-        productosAgrupados.forEach((producto) => {
-          const item = document.createElement('div');
-          item.className = 'producto-carrito';
-          item.innerHTML = `
-            <img src="${producto.imagen}" alt="${producto.nombre}" class="producto-imagen">
-            <h3 class="producto-nombre">${producto.nombre}</h3>
-            <p class="producto-detalle">Marca: ${producto.marca}</p>
-            <p class="producto-detalle">Sexo: ${producto.sexo}</p>
-            <p class="producto-detalle">Cantidad: ${producto.cantidad}</p>
-            <p class="producto-precio">Precio: ${producto.precio}€</p>
-            <p class="producto-precio">Subtotal: ${(producto.precio * producto.cantidad).toFixed(2)}€</p>
-            <button class="eliminar-btn" data-nombre="${producto.nombre}">Eliminar uno</button>
-            <hr>
-          `;
-          contenedor.appendChild(item);
-        });
-
-        // Calcular totales
-        let totalProductos = carrito.length;
-        let totalPrecio = carrito.reduce((sum, producto) => sum + parseFloat(producto.precio), 0);
-
-        document.getElementById('total-productos').textContent = totalProductos;
-        document.getElementById('total-precio').textContent = totalPrecio.toFixed(2);
-
-        // Listeners para eliminar uno
-        document.querySelectorAll('.eliminar-btn').forEach(btn => {
-          btn.addEventListener('click', e => {
-            const nombre = e.target.dataset.nombre;
-            eliminarUnProducto(nombre);
-          });
-        });
+      if (carrito.length === 0) {
+        contenedor.innerHTML = '<p>Tu carrito está vacío.</p>';
+        return;
       }
 
-      function eliminarUnProducto(nombre) {
-        const index = carrito.findIndex(p => p.nombre === nombre);
-        if (index !== -1) {
-          carrito.splice(index, 1);
-          localStorage.setItem('carrito', JSON.stringify(carrito));
-          renderCarrito();
-        }
-      }
+      const productosAgrupados = agruparProductos(carrito);
 
-      renderCarrito();
-    });
-  </script>
+      // ✅ Crear UNA sola tabla
+      const tabla = document.createElement('table');
+      tabla.innerHTML = `
+        <thead>
+          <tr>
+            <th>Imagen</th>
+            <th>Nombre</th>
+            <th>Marca</th>
+            <th>Sexo</th>
+            <th>Cantidad</th>
+            <th>Precio</th>
+            <th>Subtotal</th>
+            <th>Acción</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      `;
+
+      const tbody = tabla.querySelector('tbody');
+
+      // ✅ Agregar una fila por cada producto agrupado
+      productosAgrupados.forEach((producto) => {
+        const fila = document.createElement('tr');
+
+        fila.innerHTML = `
+          <td><img src="${producto.imagen}" alt="${producto.nombre}" style="max-width: 100px;"></td>
+          <td>${producto.nombre}</td>
+          <td>${producto.marca}</td>
+          <td>${producto.sexo}</td>
+          <td>${producto.cantidad}</td>
+          <td>${producto.precio} €</td>
+          <td>${(producto.precio * producto.cantidad).toFixed(2)} €</td>
+          <td><button class="eliminar-btn" data-nombre="${producto.nombre}">Eliminar uno</button></td>
+        `;
+
+        tbody.appendChild(fila);
+      });
+
+      contenedor.appendChild(tabla);
+
+       // Actualizar totales SIEMPRE
+  let totalProductos = carrito.length;
+  let totalPrecio = carrito.reduce((sum, producto) => sum + parseFloat(producto.precio), 0);
+
+      document.getElementById('total-productos').textContent = totalProductos;
+      document.getElementById('total-precio').textContent = totalPrecio.toFixed(2);
+
+      // Eventos de eliminar
+      document.querySelectorAll('.eliminar-btn').forEach(btn => {
+        btn.addEventListener('click', e => {
+          const nombre = e.target.dataset.nombre;
+          eliminarUnProducto(nombre);
+        });
+      });
+    }
+
+    function eliminarUnProducto(nombre) {
+      const index = carrito.findIndex(p => p.nombre === nombre);
+      if (index !== -1) {
+        carrito.splice(index, 1);
+        localStorage.setItem('carrito', JSON.stringify(carrito));
+        renderCarrito();
+      }
+    }
+
+    renderCarrito();
+  });
+</script>
+
 </body>
 </html>

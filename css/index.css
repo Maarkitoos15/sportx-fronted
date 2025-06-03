@@ -33,31 +33,109 @@
   }
   
   
-  .nav-links a {
-    margin: 0 1rem;
-    text-decoration: none;
-    color: #333;
-    font-weight: 500;
-    transition: color 0.3s ease;
+/* Contenedor principal del header */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 30px;
+  background-color: #fff;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+/* Enlaces de navegación */
+.nav-links {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+/* Contenedor a la derecha (carrito + cerrar sesión) */
+.acciones-derecha {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+/* From Uiverse.io by javierBarroso */ 
+.button {
+  position: relative;
+  width: 4em;
+  height: 4em;
+  border: none;
+  background: rgba(180, 83, 107, 0.11);
+  border-radius: 5px;
+  transition: background 0.5s;
+}
+
+.X {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 2em;
+  height: 1.5px;
+  background-color: rgb(255, 255, 255);
+  transform: translateX(-50%) rotate(45deg);
+}
+
+.Y {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 2em;
+  height: 1.5px;
+  background-color: #fff;
+  transform: translateX(-50%) rotate(-45deg);
+}
+
+.close {
+  position: absolute;
+  display: flex;
+  padding: 0.8rem 1.5rem;
+  align-items: center;
+  justify-content: center;
+  transform: translateX(-50%);
+  top: -70%;
+  left: 50%;
+  width: 3em;
+  height: 1.7em;
+  font-size: 12px;
+  background-color: rgb(19, 22, 24);
+  color: rgb(187, 229, 236);
+  border: none;
+  border-radius: 3px;
+  pointer-events: none;
+  opacity: 0;
+}
+
+.button:hover {
+  background-color: rgb(211, 21, 21);
+}
+
+.button:active {
+  background-color: rgb(130, 0, 0);
+}
+
+.button:hover > .close {
+  animation: close 0.2s forwards 0.25s;
+}
+
+@keyframes close {
+  100% {
+    opacity: 1;
   }
-  
-  .nav-links a:hover {
-    color: #007bff;
-  }
-  
-  .cart-button button {
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    padding: 0.6rem 1.2rem;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .cart-button button:hover {
-    background-color: #0056b3;
-  }
+}
+
+
+
+/* Estilo del carrito */
+.cart-button a {
+  font-size: 24px;
+  text-decoration: none;
+  color: #333;
+}
   
   .main-content {
     padding: 2rem;
@@ -399,24 +477,7 @@ h2 {
   font-family: 'Segoe UI', sans-serif;
 }
 
-/*Boton cerrar sesion*/
-.btn-cerrar-sesion {
-  background: linear-gradient(135deg, #ef4444, #b91c1c);
-  color: white;
-  padding: 0.7rem 1.5rem;
-  font-size: 1rem;
-  font-weight: 600;
-  border: none;
-  border-radius: 0.6rem;
-  cursor: pointer;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  transition: background 0.3s ease, transform 0.2s ease;
-}
 
-.btn-cerrar-sesion:hover {
-  background: linear-gradient(135deg, #dc2626, #991b1b);
-  transform: translateY(-2px);
-}
 
 /*Botones Inicio,Producto,Contacto*/
 .nav-link {
@@ -619,4 +680,23 @@ h2 {
   border-radius: 8px;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
   width: fit-content;
+}
+
+
+/*tabla al carrito*/
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+th, td {
+  border: 1px solid #ccc;
+  padding: 8px;
+  text-align: center;
+}
+
+
+.img {
+  max-width: 100px;
 }

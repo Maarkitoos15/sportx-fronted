@@ -22,12 +22,14 @@
   <div class="contenedor-login">
   <img src="./img/multimarcas.png" alt="Imagen 1" class="imagen-lateral">
   
-  <form id="login-form" class="form-login">
-    <input type="email" id="email" placeholder="Correo electrónico" required />
-    <input type="password" id="password" placeholder="Contraseña" required />
-    <button type="submit">Iniciar Sesión</button>
-    <p id="mensaje-error" class="mensaje-error"></p>
-  </form>
+<form id="login-form" class="form-login">
+  <input type="email" id="email" placeholder="Correo electrónico" required />
+  <input type="password" id="password" placeholder="Contraseña" required />
+  <button type="submit">Iniciar Sesión</button>
+  <button id="btn-invitado" type="button" class="btn-invitado">Entrar como invitado</button>
+  <p id="mensaje-error" class="mensaje-error"></p>
+</form>
+
   
   <img src="./img/multimarcas.png" alt="Imagen 2" class="imagen-lateral">
 </div>
@@ -36,36 +38,51 @@
 <p class="descripcion">SPORTX es tu tienda de ropa urbana y casual, con las marcas más top como Nike, Adidas, Puma, Reebok, Kappa y Ellesse. Estilo callejero, comodidad y actitud en cada prenda.</p>
 
 <script>
+  document.addEventListener('DOMContentLoaded', () => {
 
-  document.getElementById('login-form').addEventListener('submit', async (e) => {
-    e.preventDefault();
+    // Botón iniciar sesión
+    document.getElementById('login-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
 
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
 
-    try {
-      const res = await fetch('https://sportx-backend-production.up.railway.app/api/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password })
-      });
+      try {
+        const res = await fetch('https://sportx-backend-production.up.railway.app/api/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, password })
+        });
 
-      const data = await res.json();
+        const data = await res.json();
 
-      if (res.ok) {
-        alert('Sesión iniciada correctamente');
-        // Guardar el token si lo usas
-        localStorage.setItem('token', data.token);
-        localStorage.setItem('email', email);
-        window.location.href = './index.html';
-      } else {
-        document.getElementById('mensaje-error').textContent = data.message || 'Error al iniciar sesión';
+        if (res.ok) {
+          alert('Sesión iniciada correctamente');
+          localStorage.setItem('token', data.token);
+          localStorage.setItem('email', email);
+          localStorage.removeItem('invitado');
+          window.location.href = './index.html';
+        } else {
+          document.getElementById('mensaje-error').textContent = data.message || 'Error al iniciar sesión';
+        }
+      } catch (error) {
+        document.getElementById('mensaje-error').textContent = 'Error de conexión con el servidor';
+        console.error(error);
       }
-    } catch (error) {
-      document.getElementById('mensaje-error').textContent = 'Error de conexión con el servidor';
-      console.error(error);
+    });
+
+    // Botón entrar como invitado
+    const btnInvitado = document.getElementById('btn-invitado');
+    if (btnInvitado) {
+      btnInvitado.addEventListener('click', () => {
+        localStorage.setItem('invitado', 'true');
+        localStorage.removeItem('email');
+        localStorage.removeItem('token');
+        window.location.href = './index.html';
+      });
     }
   });
 </script>
+
 </body>
 </html>

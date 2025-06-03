@@ -24,39 +24,57 @@
       <input type="text" id="nombre" placeholder="Nombre completo" required />
       <input type="email" id="email" placeholder="Correo electrónico" required />
       <input type="password" id="password" placeholder="Contraseña" required />
+      <input type="password" id="confirmar-password" placeholder="Confirmar contraseña" required />
       <button type="submit">Registrarse</button>
       <p id="mensaje-error" class="mensaje-error"></p>
     </form>
   </main>
 
-  <script>
-    document.getElementById('registro-form').addEventListener('submit', async (e) => {
-      e.preventDefault();
+ <script>
+  document.getElementById('registro-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
 
-      const nombre = document.getElementById('nombre').value;
-      const email = document.getElementById('email').value;
-      const password = document.getElementById('password').value;
+    const nombre = document.getElementById('nombre').value;
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+    const confirmarPassword = document.getElementById('confirmar-password').value;
+    const mensajeError = document.getElementById('mensaje-error');
 
-      try {
-        const res = await fetch('https://sportx-backend-production.up.railway.app/api/register', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ nombre, email, password })
-        });
+    // Validación de contraseña compleja
+    const regexPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d|.*[\W_]).{8,}$/;
+    if (!regexPassword.test(password)) {
+      mensajeError.textContent = 'La contraseña debe tener al menos 8 caracteres, incluir mayúsculas, minúsculas y números o símbolos.';
+      return;
+    }
 
-        const data = await res.json();
+    // Validación de coincidencia
+    if (password !== confirmarPassword) {
+      mensajeError.textContent = 'Las contraseñas no coinciden.';
+      return;
+    }
 
-        if (res.ok) {
-          alert('Usuario registrado. Ahora puedes iniciar sesión.');
-          window.location.href = './login.html';
-        } else {
-          document.getElementById('mensaje-error').textContent = data.message || 'Error al registrar';
-        }
-      } catch (error) {
-        document.getElementById('mensaje-error').textContent = 'Error de conexión con el servidor';
-        console.error(error);
+    try {
+      const res = await fetch('https://sportx-backend-production.up.railway.app/api/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ nombre, email, password })
+      });
+
+      const data = await res.json();
+
+      if (res.ok) {
+        alert('Usuario registrado. Ahora puedes iniciar sesión.');
+        window.location.href = './login.html';
+      } else {
+        mensajeError.textContent = data.message || 'Error al registrar';
       }
-    });
-  </script>
+    } catch (error) {
+      mensajeError.textContent = 'Error de conexión con el servidor';
+      console.error(error);
+    }
+  });
+</script>
+
+
 </body>
 </html>
