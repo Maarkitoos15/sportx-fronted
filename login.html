@@ -39,8 +39,6 @@
 
 <script>
   document.addEventListener('DOMContentLoaded', () => {
-
-    // Botón iniciar sesión
     document.getElementById('login-form').addEventListener('submit', async (e) => {
       e.preventDefault();
 
@@ -48,23 +46,40 @@
       const password = document.getElementById('password').value;
 
       try {
-        const res = await fetch('https://sportx-backend-production.up.railway.app/api/login', {
+        // 1. Enviar datos al endpoint de login
+        const loginRes = await fetch('https://sportx-backend-production.up.railway.app/api/login', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ email, password })
         });
 
-        const data = await res.json();
+        const loginData = await loginRes.json();
 
-        if (res.ok) {
-          alert('Sesión iniciada correctamente');
-          localStorage.setItem('token', data.token);
-          localStorage.setItem('email', email);
-          localStorage.removeItem('invitado');
-          window.location.href = './index.html';
-        } else {
-          document.getElementById('mensaje-error').textContent = data.message || 'Error al iniciar sesión';
+        if (!loginRes.ok) {
+          document.getElementById('mensaje-error').textContent = loginData.message || 'Error al iniciar sesión';
+          return;
         }
+
+        // 2. Obtener la ID del usuario a partir del email
+        const idRes = await fetch(`https://sportx-backend-production.up.railway.app/api/email/usuario?email=${encodeURIComponent(email)}`);
+        const idData = await idRes.json();
+
+        if (!idRes.ok) {
+          document.getElementById('mensaje-error').textContent = idData.message || 'Error al obtener el ID del usuario';
+          return;
+        }
+
+        const usuario = idData[0]; // tomar el primer elemento del array
+        localStorage.setItem('usuario_id', usuario.id);
+
+
+        // 3. Guardar datos en localStorage y redirigir
+        localStorage.setItem('token', loginData.token);
+        localStorage.setItem('email', email);
+        localStorage.removeItem('invitado');
+
+        alert('Sesión iniciada correctamente');
+        window.location.href = './index.html';
       } catch (error) {
         document.getElementById('mensaje-error').textContent = 'Error de conexión con el servidor';
         console.error(error);
@@ -78,6 +93,7 @@
         localStorage.setItem('invitado', 'true');
         localStorage.removeItem('email');
         localStorage.removeItem('token');
+        localStorage.removeItem('usuario_id');
         window.location.href = './index.html';
       });
     }

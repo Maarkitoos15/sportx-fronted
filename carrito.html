@@ -16,22 +16,26 @@
     <p>Total a pagar: <span id="total-precio">0.00</span> €</p>
   </div>
 
+  <button id="btnpagar">Pagar</button>
+
   <script>
   document.addEventListener('DOMContentLoaded', () => {
     const contenedor = document.getElementById('carrito-container');
     let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
 
-    function agruparProductos(carrito) {
-      const agrupado = {};
-      carrito.forEach(producto => {
-        const clave = producto.id || producto.nombre;
-        if (agrupado[clave]) {
-          agrupado[clave].cantidad += 1;
+    function agruparProductos(productos) {
+      const agrupados = {};
+
+      productos.forEach(producto => {
+        const clave = `${producto.nombre}-${producto.marca}-${producto.sexo}`;
+        if (!agrupados[clave]) {
+          agrupados[clave] = { ...producto, cantidad: 1 };
         } else {
-          agrupado[clave] = { ...producto, cantidad: 1 };
+          agrupados[clave].cantidad++;
         }
       });
-      return Object.values(agrupado);
+
+      return Object.values(agrupados);
     }
 
     function renderCarrito() {
@@ -44,7 +48,6 @@
 
       const productosAgrupados = agruparProductos(carrito);
 
-      // ✅ Crear UNA sola tabla
       const tabla = document.createElement('table');
       tabla.innerHTML = `
         <thead>
@@ -64,7 +67,6 @@
 
       const tbody = tabla.querySelector('tbody');
 
-      // ✅ Agregar una fila por cada producto agrupado
       productosAgrupados.forEach((producto) => {
         const fila = document.createElement('tr');
 
@@ -84,14 +86,12 @@
 
       contenedor.appendChild(tabla);
 
-       // Actualizar totales SIEMPRE
-  let totalProductos = carrito.length;
-  let totalPrecio = carrito.reduce((sum, producto) => sum + parseFloat(producto.precio), 0);
+      let totalProductos = carrito.length;
+      let totalPrecio = carrito.reduce((sum, producto) => sum + parseFloat(producto.precio), 0);
 
       document.getElementById('total-productos').textContent = totalProductos;
       document.getElementById('total-precio').textContent = totalPrecio.toFixed(2);
 
-      // Eventos de eliminar
       document.querySelectorAll('.eliminar-btn').forEach(btn => {
         btn.addEventListener('click', e => {
           const nombre = e.target.dataset.nombre;
@@ -110,8 +110,55 @@
     }
 
     renderCarrito();
-  });
-</script>
 
+    const btnPagar = document.getElementById('btnpagar');
+
+    btnPagar.addEventListener('click', async () => {
+      const idUser = localStorage.getItem('usuario_id');
+
+      if (!idUser) {
+        alert('No se puede pagar: usuario no identificado');
+        return;
+      }
+
+      const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+
+      if (carrito.length === 0) {
+        alert('El carrito está vacío');
+        return;
+      }
+
+      const totalPrice = carrito.reduce((sum, producto) => sum + parseFloat(producto.precio), 0);
+
+      const ventaData = {
+        price: totalPrice.toFixed(2),
+        usuario_id: idUser
+      };
+
+      try {
+        const res = await fetch('https://sportx-backend-production.up.railway.app/api/ventas', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(ventaData)
+        });
+
+        const data = await res.json();
+
+        if (res.ok) {
+          alert('Pago realizado con éxito. Gracias por tu compra.');
+          localStorage.removeItem('carrito');
+          window.location.reload();
+        } else {
+          alert(data.message || 'No se pudo completar la compra.');
+        }
+      } catch (error) {
+        console.error('Error al procesar el pago:', error);
+        alert('Error del servidor al procesar el pago');
+      }
+    });
+  });
+  </script>
 </body>
 </html>

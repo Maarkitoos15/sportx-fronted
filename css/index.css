@@ -700,3 +700,22 @@ th, td {
 .img {
   max-width: 100px;
 }
+
+
+/*Pedidos*/
+.pedidos-container table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.pedidos-container th, 
+.pedidos-container td {
+  border: 1px solid #aaa;
+  padding: 8px;
+  text-align: left;
+}
+
+.pedidos-container th {
+  background-color: #ddd;
+}

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mis Pedidos | SportX</title>
+  <link rel="icon" type="image/png" href="./img/logo.png">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background: #f9f9f9;
+      color: #333;
+    }
+
+    h1 {
+      text-align: center;
+      color: #222;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+      background: white;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    th, td {
+      padding: 12px;
+      text-align: center;
+      border-bottom: 1px solid #ddd;
+    }
+
+    th {
+      background-color: #333;
+      color: white;
+    }
+
+    #pedidos-container p {
+      text-align: center;
+      font-size: 1.2em;
+    }
+  </style>
+</head>
+<body>
+  <h1>Mis Pedidos</h1>
+  <div id="pedidos-container">
+    <p>Cargando pedidos...</p>
+  </div>
+
+  <script>
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const contenedor = document.getElementById('pedidos-container');
+      const usuario_id = localStorage.getItem('usuario_id');
+
+      if (!usuario_id) {
+        contenedor.innerHTML = '<p>No estás identificado. Por favor, inicia sesión.</p>';
+        return;
+      }
+
+      fetch(`https://sportx-backend-production.up.railway.app/api/ventas/${usuario_id}`)
+        .then(res => {
+          if (!res.ok) throw new Error('Error al obtener pedidos');
+          return res.json();
+        })
+        .then(ventas => {
+          if (ventas.length === 0) {
+            contenedor.innerHTML = '<p>No tienes pedidos realizados.</p>';
+            return;
+          }
+
+          const tabla = document.createElement('table');
+          tabla.innerHTML = `
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Fecha</th>
+                <th>Precio (€)</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${ventas.map((venta, i) => `
+                <tr>
+                  <td>${i + 1}</td>
+                  <td>${venta.date}</td>
+
+                  <td>${parseFloat(venta.price).toFixed(2)}</td>
+                </tr>
+              `).join('')}
+            </tbody>
+          `;
+
+          contenedor.innerHTML = '';
+          contenedor.appendChild(tabla);
+        })
+        .catch(err => {
+          console.error(err);
+          contenedor.innerHTML = '<p>Error al cargar los pedidos.</p>';
+        });
+    });
+  </script>
+</body>
+</html>
