@@ -5,48 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Mis Pedidos | SportX</title>
   <link rel="icon" type="image/png" href="./img/logo.png">
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      padding: 20px;
-      background: #f9f9f9;
-      color: #333;
-    }
-
-    h1 {
-      text-align: center;
-      color: #222;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 20px;
-      background: white;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    }
-
-    th, td {
-      padding: 12px;
-      text-align: center;
-      border-bottom: 1px solid #ddd;
-    }
-
-    th {
-      background-color: #333;
-      color: white;
-    }
-
-    #pedidos-container p {
-      text-align: center;
-      font-size: 1.2em;
-    }
-  </style>
+  <link rel="stylesheet" href="./css/index.css">
 </head>
 <body>
+    <button class="btn-volver" onclick="window.location.href='./index.html'">Volver a la tienda</button>
   <h1>Mis Pedidos</h1>
+   <h1 class="titulo-pedidos">Pedidos Realizados</h1>
+
   <div id="pedidos-container">
-    <p>Cargando pedidos...</p>
+    <p class="mensaje-pedidos">Aún no has realizado ningún pedido.</p>
   </div>
 
   <script>
