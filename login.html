@@ -51,29 +51,25 @@
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ email, password })
-        });
-
-        const loginData = await loginRes.json();
-
-        if (!loginRes.ok) {
+        }); if (!loginRes.ok) {
           document.getElementById('mensaje-error').textContent = loginData.message || 'Error al iniciar sesión';
           return;
         }
 
+        const loginData = await loginRes.json()
+   
         // 2. Obtener la ID del usuario a partir del email
-        const idRes = await fetch(`https://sportx-backend-production.up.railway.app/api/email/usuario?email=${encodeURIComponent(email)}`);
-        const idData = await idRes.json();
+        fetch(`https://sportx-backend-production.up.railway.app/api/email/usuario?email=${encodeURIComponent(email)}`)
+          .then(response => response.json())
+          .then(data => {
+              const id = data.id;
+              localStorage.setItem('usuario_id', id);
+          });
 
-        if (!idRes.ok) {
-          document.getElementById('mensaje-error').textContent = idData.message || 'Error al obtener el ID del usuario';
-          return;
-        }
-
-        const usuario = idData[0]; // tomar el primer elemento del array
-        localStorage.setItem('usuario_id', usuario.id);
+       // localStorage.setItem('usuario_id', idData.id);
 
 
-        // 3. Guardar datos en localStorage y redirigir
+           // 3. Guardar datos en localStorage y redirigir
         localStorage.setItem('token', loginData.token);
         localStorage.setItem('email', email);
         localStorage.removeItem('invitado');
@@ -85,6 +81,8 @@
         console.error(error);
       }
     });
+   
+    
 
     // Botón entrar como invitado
     const btnInvitado = document.getElementById('btn-invitado');
@@ -97,7 +95,12 @@
         window.location.href = './index.html';
       });
     }
+     
+       
+       
   });
+  
+
 </script>
 
 </body>
