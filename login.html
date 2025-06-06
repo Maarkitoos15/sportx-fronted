@@ -46,7 +46,7 @@
       const password = document.getElementById('password').value;
 
       try {
-        // 1. Enviar datos al endpoint de login
+
         const loginRes = await fetch('https://sportx-backend-production.up.railway.app/api/login', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -57,8 +57,7 @@
         }
 
         const loginData = await loginRes.json()
-   
-        // 2. Obtener la ID del usuario a partir del email
+
         fetch(`https://sportx-backend-production.up.railway.app/api/email/usuario?email=${encodeURIComponent(email)}`)
           .then(response => response.json())
           .then(data => {
@@ -66,10 +65,7 @@
               localStorage.setItem('usuario_id', id);
           });
 
-       // localStorage.setItem('usuario_id', idData.id);
 
-
-           // 3. Guardar datos en localStorage y redirigir
         localStorage.setItem('token', loginData.token);
         localStorage.setItem('email', email);
         localStorage.removeItem('invitado');
@@ -82,9 +78,6 @@
       }
     });
    
-    
-
-    // Botón entrar como invitado
     const btnInvitado = document.getElementById('btn-invitado');
     if (btnInvitado) {
       btnInvitado.addEventListener('click', () => {

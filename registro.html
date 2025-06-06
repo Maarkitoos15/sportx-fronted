@@ -40,14 +40,12 @@
     const confirmarPassword = document.getElementById('confirmar-password').value;
     const mensajeError = document.getElementById('mensaje-error');
 
-    // Validación de contraseña compleja
     const regexPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d|.*[\W_]).{8,}$/;
     if (!regexPassword.test(password)) {
       mensajeError.textContent = 'La contraseña debe tener al menos 8 caracteres, incluir mayúsculas, minúsculas y números o símbolos.';
       return;
     }
 
-    // Validación de coincidencia
     if (password !== confirmarPassword) {
       mensajeError.textContent = 'Las contraseñas no coinciden.';
       return;
