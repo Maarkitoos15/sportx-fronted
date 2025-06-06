@@ -750,3 +750,26 @@ th, td {
 .filtro-btn:hover {
   background-color: #555;
 }
+
+.btn-pagar {
+  background-color: #28a745;
+  color: white;
+  font-weight: bold;
+  padding: 12px 25px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1.1rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.btn-pagar:hover {
+  background-color: #218838;
+  transform: scale(1.05);
+}
+
+.btn-pagar:active {
+  background-color: #1e7e34;
+  transform: scale(0.95);
+}
